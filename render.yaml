@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: procedural-space-economy
+    runtime: static
+    buildCommand: ""
+    staticPublishPath: .
+    pullRequestPreviewsEnabled: true
