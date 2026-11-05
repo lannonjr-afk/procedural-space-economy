@@ -127,7 +127,7 @@ function generateSystem() {
   const systemSeed = (state.seed + Math.imul(state.system, 0x9e3779b9)) >>> 0, random = rng(systemSeed);
   const starColor = new THREE.Color().setHSL(0.035 + random() * 0.16, 0.9, 0.63);
   // 100,000–150,000 scene-unit radius: the sun is a destination, not a dot.
-  const starRadius = 100_000 + random() * 50_000;
+  const starRadius = 1_000_000 + random() * 500_000;
   add(new THREE.Mesh(new THREE.SphereGeometry(starRadius, 64, 48), new THREE.MeshBasicMaterial({ color: starColor })));
   add(new THREE.Mesh(new THREE.SphereGeometry(starRadius * 1.12, 48, 32), new THREE.MeshBasicMaterial({ color: starColor, transparent: true, opacity: 0.11, side: THREE.BackSide, depthWrite: false })));
   add(new THREE.PointLight(starColor, 250_000_000, 3_000_000, 1.2));
@@ -139,7 +139,7 @@ function generateSystem() {
   for (let i = 0; i < count; i++) {
     orbit += starRadius * (1.7 + random() * 1.3);
     // 50,000–100,000 units in radius. Terrain displacement scales with the body.
-    const radius = 50_000 + random() * 50_000;
+    const radius = 500_000 + random() * 500_000;
     const planetSeed = Math.floor(random() * 0xffffffff) >>> 0;
     const color = colors[Math.floor(random() * colors.length)];
     const material = new THREE.MeshStandardMaterial({ color, roughness: 0.94, metalness: 0.015 });
@@ -259,8 +259,8 @@ document.addEventListener('keydown', (event) => {
 document.addEventListener('keyup', (event) => state.keys.delete(event.key.toLowerCase()));
 window.addEventListener('blur', () => state.keys.clear());
 ui.warp.addEventListener('click', jump);
-ui.guide.addEventListener('click', () => { state.autopilot = !state.autopilot; ui.guide.textContent = state.autopilot ? 'Cancel hub guide' : 'Guide to trade hub'; ui.notice.textContent = state.autopilot ? 'Autopilot guiding to this system’s trade hub.' : 'Hub guidance cancelled.'; });
+ui.guide.addEventListener('click', () => { state.autopilot = !state.autopilot; ui.guide.textContent = state.autopilot ? 'Cancel hub guide' : 'Guide to trade hub'; ui.notice.textContent = state.autopilot ? 'Autopilot guiding toward this system\'s trade hub.' : 'Hub guidance cancelled.'; });
 $('#close-trade').addEventListener('click', closeTrade);
-window.addEventListener('resize', () => { camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix(); renderer.setSize(innerWidth, innerHeight); renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 1.6)); });
+window.addEventListener('resize', () => { camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix(); renderer.setSize(innerWidth, innerHeight); renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.6)); });
 function frame() { requestAnimationFrame(frame); if (!state.tradeOpen) { fly(Math.min(clock.getDelta(), 0.05)); updateHud(); } renderer.render(scene, camera); }
 frame();
