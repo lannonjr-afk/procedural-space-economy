@@ -1,23 +1,18 @@
-# Space exploration milestone
+# Exploration gameplay milestone
 
-This milestone adds a browser-based 3D exploration scene and deterministic universe primitives.
+This increment adds a local gameplay loop to the Three.js exploration scene:
 
-## Run the scene
+1. Fly around a deterministic generated system.
+2. Approach a planet and press **E** to survey its resource type, grade, and remaining finite deposit.
+3. Move within 18 scene units and press **M** to mine one unit. The hold is capped at 40 units.
+4. Discover additional planets/systems; mined cargo has no vendor that conjures currency or stock.
+5. Surveys, cargo, and extraction progress are saved in browser local storage.
 
-The browser module imports Three.js from jsDelivr, so an internet connection is required. From the repository root, run:
+The local simulation still uses a small Three.js coordinate range (despite HUD labels using km), and clients can modify their local save. This is a prototype game loop only: terrain is a displaced sphere surface, not a streamed volumetric planet; there is no server authority, collision/landing, trading UI, or connection to `RegionalBazaar`.
 
-```bash
-python3 -m http.server 8000
-```
+## Next increments
 
-Open <http://localhost:8000/> in a WebGL-capable browser. Click the scene to capture the pointer. Controls: **WASD** thrust, **mouse** steer, **Space** brake, **Shift** boost, **E** survey when within 32 km, and **J** or the jump button to generate the next deterministic system.
-
-Planets are generated from a system seed with multi-octave 3D value noise displacement. The scene provides a star, orbit paths, ambient star field, ship movement, system transitions, proximity targeting, and repeatable survey results. The Python `universe.py` module separately models deterministic sector coordinates and system descriptors using the shared 64-bit spatial hash and existing terrain SDF sampler.
-
-## Coordinate strategy
-
-The Python world model stores signed 64-bit sector anchors and bounded local offsets. Normalize local offsets by carrying whole sectors, then subtract a nearby origin before conversion to render-space floats. This avoids representing a cosmic absolute coordinate as one imprecise floating-point number. The current browser scene is a small local-scale prototype; its Three.js positions are not yet wired to `SectorPosition` or a server.
-
-## Scope and next integration steps
-
-This is an exploration prototype, not the complete multiplayer game: no authoritative multiplayer movement, persistent player identity, server validation, landing/walking, mesh LOD streaming, terrain collision, mining inventory, or bazaar API integration is included. The browser generates local visuals and survey messages only. The existing Python `terrain.py` provides a deterministic spherical SDF field; surface/volume chunk meshing and worker streaming remain follow-up tasks.
+- Add a Python HTTP/WebSocket server and move player position, mining claims, inventory, and account state server-side.
+- Connect trading UI to the bazaar with authenticated, idempotent commands; keep market books empty until players place orders.
+- Add actual chunked surface meshes / volumetric terrain and worker-based LOD streaming.
+- Add persistence and deployment configuration, then verify using automated browser and multiplayer integration tests.

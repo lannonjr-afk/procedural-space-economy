@@ -16,7 +16,7 @@
       <header class="topbar">
         <div><span class="eyebrow">PROCEDURAL SPACE ECONOMY</span><h1>Deep Space</h1></div>
         <div class="system-readout"><span>STAR SYSTEM</span><strong id="system-name">…</strong></div>
-        <button id="warp" type="button">Jump to next system <kbd>J</kbd></button>
+        <button id="warp" type="button">Jump system <kbd>J</kbd></button>
       </header>
       <section class="left-hud panel">
         <h2>Flight telemetry</h2>
@@ -25,13 +25,16 @@
         <div class="metric"><span>Target</span><strong id="target">Scanning…</strong></div>
         <div class="metric"><span>Range</span><strong id="range">—</strong></div>
         <div class="divider"></div>
-        <h2>Survey data</h2>
-        <p id="survey" class="muted">Approach a planet and press <kbd>E</kbd> to scan it.</p>
+        <h2>Survey & cargo</h2>
+        <p id="survey" class="muted">Approach a planet and press E to scan it.</p>
+        <div class="cargo-head"><span>Hold</span><strong id="cargo-capacity">0 / 40 units</strong></div>
+        <div id="cargo" class="cargo-list"></div>
+        <p id="credits" class="credits">Credits: 0</p>
       </section>
       <section class="bottom-hud panel">
         <div class="crosshair" aria-hidden="true"></div>
         <p id="notice">Click the scene to capture the mouse and begin flying.</p>
-        <div class="controls"><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> thrust · <kbd>Space</kbd> brake · <kbd>Shift</kbd> boost · mouse look · <kbd>E</kbd> survey · <kbd>J</kbd> jump</div>
+        <div class="controls"><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> thrust · mouse steer · <kbd>Space</kbd> brake · <kbd>Shift</kbd> boost · <kbd>E</kbd> survey · <kbd>M</kbd> mine · <kbd>J</kbd> jump · <kbd>Ctrl</kbd> down</div>
       </section>
       <div id="reticle" aria-hidden="true">＋</div>
     </main>
