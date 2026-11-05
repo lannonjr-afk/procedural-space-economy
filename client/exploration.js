@@ -16,6 +16,9 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.outputColorSpace = THREE.SRGBColorSpace;
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
 renderer.toneMappingExposure = 2.4;
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x02050b);
 // Long draw range is required by the enlarged systems (outer planets can be millions of units away).
@@ -130,8 +133,17 @@ function generateSystem() {
   const starRadius = 1_000_000 + random() * 500_000;
   add(new THREE.Mesh(new THREE.SphereGeometry(starRadius, 64, 48), new THREE.MeshBasicMaterial({ color: starColor.clone().multiplyScalar(1.8), toneMapped: false })));
   add(new THREE.Mesh(new THREE.SphereGeometry(starRadius * 1.12, 48, 32), new THREE.MeshBasicMaterial({ color: starColor, transparent: true, opacity: 0.18, side: THREE.BackSide, depthWrite: false, toneMapped: false })));
-  add(new THREE.PointLight(starColor, 1e13, 0, 2));
-  add(new THREE.AmbientLight(0x7188aa, 0.65));
+
+  const sunLight = new THREE.PointLight(starColor, 2.5e10, 0, 2);
+  sunLight.position.set(0, 0, 0);
+  sunLight.castShadow = true;
+  sunLight.shadow.mapSize.set(2048, 2048);
+  sunLight.shadow.bias = -0.00015;
+  sunLight.shadow.normalBias = 0.05;
+  sunLight.shadow.radius = 4;
+  sunLight.decay = 2;
+  add(sunLight);
+  add(new THREE.AmbientLight(0x7188aa, 0.12));
 
   const count = 5 + Math.floor(random() * 3);
   const colors = [0x397ec1, 0xb48461, 0x82a981, 0x7d70aa, 0xb7a66f, 0x598d91, 0xa14f55];
@@ -142,9 +154,10 @@ function generateSystem() {
     const radius = 500_000 + random() * 500_000;
     const planetSeed = Math.floor(random() * 0xffffffff) >>> 0;
     const color = colors[Math.floor(random() * colors.length)];
-    const emissiveColor = new THREE.Color(color).multiplyScalar(0.14);
-    const material = new THREE.MeshStandardMaterial({ color, roughness: 0.94, metalness: 0.015, emissive: emissiveColor, emissiveIntensity: 0.4 });
+    const material = new THREE.MeshStandardMaterial({ color, roughness: 0.94, metalness: 0.015, emissive: new THREE.Color(color).multiplyScalar(0.02), emissiveIntensity: 0.03 });
     const mesh = new THREE.Mesh(makePlanetGeometry(radius, planetSeed, radius * (0.025 + random() * 0.055)), material);
+    mesh.castShadow = true;
+    mesh.receiveShadow = true;
     const angle = random() * Math.PI * 2, inclination = (random() - 0.5) * orbit * 0.025;
     mesh.position.set(Math.cos(angle) * orbit, inclination, Math.sin(angle) * orbit);
     add(mesh);
@@ -159,6 +172,7 @@ function generateSystem() {
   const hubOrbit = orbit + starRadius * 3, hubAngle = random() * Math.PI * 2;
   const hub = makeHub(hubSeed, hubScale, styleIndex);
   hub.position.set(Math.cos(hubAngle) * hubOrbit, (random() - 0.5) * starRadius, Math.sin(hubAngle) * hubOrbit);
+  hub.traverse((child) => { if (child.isMesh) { child.castShadow = true; child.receiveShadow = true; } });
   add(hub); state.hub = hub;
 
   const points = new Float32Array(2600 * 3), stars = rng(systemSeed ^ 0xdeadbeef);
