@@ -1,11 +1,32 @@
-# Procedural Space Economy
+# procedural-space-economy
 
-Technical blueprint and reference implementation for a deterministic, streamed space-exploration simulation with a player-driven economy.
+Technical blueprint and reference implementation for a procedural space exploration game with streamed planetary terrain, dynamic markets, and authoritative networking.
 
-## Start here
+## Play the prototype
 
-- [Architecture and performance blueprint](docs/architecture.md)
-- Python 3.11 reference package: `src/spacegame/`
-- TypeScript client spatial primitives: `client/spatial.ts`
+This repository now includes a playable browser prototype of the game loop with:
 
-Python modules use only the standard library. Run tests with `python -m unittest discover -s tests` and type-check the client with `npx tsc --noEmit` after installing TypeScript.
+- procedural star systems and planets
+- ship movement and resource harvesting
+- a dynamic market with buy/sell actions
+- deterministic economic and terrain simulation hooks
+
+### Run locally
+
+From the repository root:
+
+```bash
+python3 -m http.server 8000
+```
+
+Then open:
+
+- http://localhost:8000/
+
+### Files
+
+- `index.html` — browser game shell
+- `style.css` — HUD and layout styling
+- `game.js` — game loop, terrain generation, market simulation, controls
+- `docs/architecture.md` — deep design and system blueprint
+- `src/spacegame/` — Python reference models for generation, economy, and networking
