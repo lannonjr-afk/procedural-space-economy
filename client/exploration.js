@@ -129,20 +129,26 @@ function generateSystem() {
   if (state.tradeOpen) closeTrade();
   const systemSeed = (state.seed + Math.imul(state.system, 0x9e3779b9)) >>> 0, random = rng(systemSeed);
   const starColor = new THREE.Color().setHSL(0.035 + random() * 0.16, 0.9, 0.63);
-  // 100,000–150,000 scene-unit radius: the sun is a destination, not a dot.
   const starRadius = 1_000_000 + random() * 500_000;
   add(new THREE.Mesh(new THREE.SphereGeometry(starRadius, 64, 48), new THREE.MeshBasicMaterial({ color: starColor.clone().multiplyScalar(1.8), toneMapped: false })));
   add(new THREE.Mesh(new THREE.SphereGeometry(starRadius * 1.12, 48, 32), new THREE.MeshBasicMaterial({ color: starColor, transparent: true, opacity: 0.18, side: THREE.BackSide, depthWrite: false, toneMapped: false })));
 
-  const sunLight = new THREE.PointLight(starColor, 2.5e10, 0, 2);
-  sunLight.position.set(0, 0, 0);
+  const sunLight = new THREE.DirectionalLight(starColor, 5.0);
+  sunLight.position.set(0, 0, 1).multiplyScalar(starRadius * 4);
+  sunLight.target.position.set(0, 0, 0);
   sunLight.castShadow = true;
   sunLight.shadow.mapSize.set(2048, 2048);
+  sunLight.shadow.camera.left = -5_000_000;
+  sunLight.shadow.camera.right = 5_000_000;
+  sunLight.shadow.camera.top = 5_000_000;
+  sunLight.shadow.camera.bottom = -5_000_000;
+  sunLight.shadow.camera.near = 100_000;
+  sunLight.shadow.camera.far = 40_000_000;
   sunLight.shadow.bias = -0.00015;
   sunLight.shadow.normalBias = 0.05;
   sunLight.shadow.radius = 4;
-  sunLight.decay = 2;
   add(sunLight);
+  add(sunLight.target);
   add(new THREE.AmbientLight(0x7188aa, 0.12));
 
   const count = 5 + Math.floor(random() * 3);
@@ -150,11 +156,16 @@ function generateSystem() {
   let orbit = starRadius * 2.7;
   for (let i = 0; i < count; i++) {
     orbit += starRadius * (1.7 + random() * 1.3);
-    // 50,000–100,000 units in radius. Terrain displacement scales with the body.
     const radius = 500_000 + random() * 500_000;
     const planetSeed = Math.floor(random() * 0xffffffff) >>> 0;
     const color = colors[Math.floor(random() * colors.length)];
-    const material = new THREE.MeshStandardMaterial({ color, roughness: 0.94, metalness: 0.015, emissive: new THREE.Color(color).multiplyScalar(0.02), emissiveIntensity: 0.03 });
+    const material = new THREE.MeshStandardMaterial({
+      color,
+      roughness: 0.94,
+      metalness: 0.015,
+      emissive: new THREE.Color(color).multiplyScalar(0.02),
+      emissiveIntensity: 0.03
+    });
     const mesh = new THREE.Mesh(makePlanetGeometry(radius, planetSeed, radius * (0.025 + random() * 0.055)), material);
     mesh.castShadow = true;
     mesh.receiveShadow = true;
@@ -181,7 +192,6 @@ function generateSystem() {
   add(new THREE.Points(starGeometry, new THREE.PointsMaterial({ color: 0xa9d9ff, size: 360, sizeAttenuation: true, transparent: true, opacity: 0.9 })));
 
   ui.system.textContent = `SECTOR ${state.system + 1} · ${systemSeed.toString(16).toUpperCase().padStart(8, '0')}`;
-  // Spawn just above the first world and look toward it so the scale is immediately obvious.
   state.position.copy(state.planets[0].mesh.position).add(new THREE.Vector3(0, 0, state.planets[0].radius * 1.28));
   state.velocity.set(0, 0, 0); state.yaw = 0; state.pitch = -0.18; state.autopilot = false;
   ui.guide.textContent = 'Guide to trade hub'; ui.survey.textContent = 'Approach a planet and press E to survey.';
