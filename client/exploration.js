@@ -128,9 +128,10 @@ function generateSystem() {
   const starColor = new THREE.Color().setHSL(0.035 + random() * 0.16, 0.9, 0.63);
   // 100,000–150,000 scene-unit radius: the sun is a destination, not a dot.
   const starRadius = 1_000_000 + random() * 500_000;
-  add(new THREE.Mesh(new THREE.SphereGeometry(starRadius, 64, 48), new THREE.MeshBasicMaterial({ color: starColor })));
-  add(new THREE.Mesh(new THREE.SphereGeometry(starRadius * 1.12, 48, 32), new THREE.MeshBasicMaterial({ color: starColor, transparent: true, opacity: 0.11, side: THREE.BackSide, depthWrite: false })));
-  add(new THREE.PointLight(starColor, 250_000_000, 3_000_000, 1.2));
+  add(new THREE.Mesh(new THREE.SphereGeometry(starRadius, 64, 48), new THREE.MeshBasicMaterial({ color: starColor.clone().multiplyScalar(1.8), toneMapped: false })));
+  add(new THREE.Mesh(new THREE.SphereGeometry(starRadius * 1.12, 48, 32), new THREE.MeshBasicMaterial({ color: starColor, transparent: true, opacity: 0.18, side: THREE.BackSide, depthWrite: false, toneMapped: false })));
+  // Light reaches the distant worlds; inverse-square falloff keeps nearby planets brighter.
+  add(new THREE.PointLight(starColor, 1e13, 0, 2));
   add(new THREE.AmbientLight(0x7188aa, 0.65));
 
   const count = 5 + Math.floor(random() * 3);
