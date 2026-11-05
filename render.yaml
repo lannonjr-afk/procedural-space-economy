@@ -5,3 +5,10 @@ services:
     buildCommand: ""
     staticPublishPath: .
     pullRequestPreviewsEnabled: true
+    routes:
+      - type: rewrite
+        source: /health
+        destination: /health.txt
+      - type: rewrite
+        source: /*
+        destination: /index.html
