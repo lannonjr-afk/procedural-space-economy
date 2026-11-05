@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#07131d" />
-    <title>Procedural Space Economy — Explorer</title>
+    <title>Deep Space — Procedural Space Economy</title>
     <link rel="stylesheet" href="style.css" />
     <script type="importmap">
       { "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.166.1/build/three.module.js" } }
@@ -22,20 +22,19 @@
       <section class="left-hud panel">
         <h2>Flight telemetry</h2>
         <div class="metric"><span>Velocity</span><strong id="velocity">0 u/s</strong></div>
-        <div class="metric"><span>Position</span><strong id="position">0, 0, 0</strong></div>
         <div class="metric"><span>Target</span><strong id="target">Scanning…</strong></div>
         <div class="metric"><span>Range</span><strong id="range">—</strong></div>
         <div class="metric"><span>Trade hub</span><strong id="hub-range">—</strong></div>
         <div class="divider"></div>
         <h2>Survey & cargo</h2>
-        <p id="survey" class="muted">Approach a planet and press E to scan it.</p>
+        <p id="survey" class="muted">Approach a planet and press E to survey.</p>
         <div class="cargo-head"><span>Hold</span><strong id="cargo-capacity">0 / 40 units</strong></div>
         <div id="cargo" class="cargo-list"></div>
         <p id="credits" class="credits">Credits: 0</p>
       </section>
       <section class="bottom-hud panel">
-        <p id="notice">Click the scene to capture the mouse and begin flying.</p>
-        <div class="controls"><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> thrust · mouse steer · <kbd>Space</kbd> brake · <kbd>Shift</kbd> boost · <kbd>E</kbd> survey · <kbd>M</kbd> mine · <kbd>T</kbd> dock · <kbd>J</kbd> jump · <kbd>Ctrl</kbd> down</div>
+        <p id="notice">Planets and stars are enormous—fly toward the nearby world to see its scale.</p>
+        <div class="controls"><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> thrust · mouse steer · <kbd>Space</kbd> brake · <kbd>Shift</kbd> boost · <kbd>R</kbd>/<kbd>Ctrl</kbd> up/down · <kbd>E</kbd> survey · <kbd>M</kbd> mine · <kbd>T</kbd> dock · <kbd>J</kbd> jump</div>
       </section>
       <div id="reticle" aria-hidden="true">＋</div>
       <section id="trade-panel" class="trade-panel panel" hidden aria-live="polite">
@@ -44,10 +43,10 @@
         <h2 id="hub-title">Trade Hub</h2>
         <p id="hub-description" class="muted"></p>
         <div class="divider"></div>
-        <h3>Your cargo</h3>
+        <h3>Cargo manifest</h3>
         <div id="hub-cargo" class="cargo-list"></div>
-        <p id="market-status" class="muted market-status"></p>
-        <p class="hub-hint">Markets start empty. Orders and stock come from players; this local prototype is not connected to the multiplayer bazaar server yet.</p>
+        <p id="market-status" class="market-status"></p>
+        <p class="hub-hint">No stock or orders are seeded. Trading will be connected to the player bazaar service in a later milestone.</p>
       </section>
     </main>
     <script type="module" src="client/exploration.js"></script>
