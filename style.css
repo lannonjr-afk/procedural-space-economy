@@ -1,4 +1,34 @@
-/* Actual stylesheet for the forthcoming browser client; no game shell is wired yet. */
-:root { color-scheme: dark; font-family: system-ui, sans-serif; background: #07131d; color: #edf9ff; }
+:root {
+  color-scheme: dark;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: #e8f7ff;
+  background: #030912;
+  font-synthesis: none;
+}
 * { box-sizing: border-box; }
-body { margin: 0; min-height: 100vh; }
+html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; }
+body { background: radial-gradient(ellipse at 50% 45%, #10243a 0%, #07131d 42%, #03070d 100%); }
+#game { position: relative; width: 100%; height: 100%; min-height: 420px; }
+#view { position: absolute; inset: 0; width: 100%; height: 100%; display: block; outline: none; }
+.topbar { position: absolute; inset: 0 0 auto; display: flex; align-items: center; gap: 24px; padding: 22px 28px; background: linear-gradient(180deg, rgba(2,8,15,.88), transparent); pointer-events: none; }
+.topbar > * { pointer-events: auto; }
+h1 { margin: 2px 0 0; font-size: clamp(20px, 2.5vw, 30px); letter-spacing: .03em; }
+h2 { margin: 0 0 15px; font-size: 13px; letter-spacing: .13em; text-transform: uppercase; color: #8edcf3; }
+.eyebrow, .system-readout span { font-size: 10px; letter-spacing: .16em; color: #7e9db5; }
+.system-readout { margin-left: auto; display: flex; flex-direction: column; gap: 4px; text-align: right; }
+.system-readout strong { font-size: 16px; }
+button { color: #e8f7ff; background: rgba(57,155,190,.18); border: 1px solid rgba(112,220,246,.38); border-radius: 8px; padding: 10px 13px; cursor: pointer; }
+button:hover { background: rgba(57,155,190,.34); }
+kbd { display: inline-block; padding: 2px 5px; border: 1px solid rgba(160,204,226,.32); border-radius: 4px; background: rgba(255,255,255,.06); color: #d7efff; font: 10px ui-monospace, monospace; }
+.panel { position: absolute; border: 1px solid rgba(119,205,234,.18); border-radius: 12px; background: rgba(4,13,22,.76); box-shadow: 0 10px 40px rgba(0,0,0,.2); backdrop-filter: blur(12px); }
+.left-hud { top: 118px; left: 24px; width: min(280px, calc(100vw - 48px)); padding: 18px; }
+.metric { display: flex; justify-content: space-between; gap: 12px; margin: 12px 0; font-size: 12px; }
+.metric span, .muted { color: #87a2b7; }
+.metric strong { text-align: right; font-weight: 600; }
+.divider { height: 1px; margin: 18px 0; background: rgba(119,205,234,.15); }
+#survey { min-height: 52px; margin: 0; font-size: 12px; line-height: 1.6; }
+.bottom-hud { inset: auto 24px 20px; padding: 12px 16px; text-align: center; }
+#notice { margin: 2px 0 9px; font-size: 13px; }
+.controls { color: #90aabc; font-size: 11px; }
+#reticle { position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); color: rgba(206,240,255,.74); font-size: 23px; pointer-events: none; text-shadow: 0 0 10px #53cbea; }
+@media (max-width: 700px) { .topbar { padding: 15px; gap: 10px; } .left-hud { top: 95px; left: 12px; width: 225px; padding: 13px; } .bottom-hud { inset: auto 10px 10px; } .controls { line-height: 1.8; } .system-readout { font-size: 12px; } button { padding: 8px; font-size: 11px; } }

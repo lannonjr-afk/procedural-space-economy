@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#07131d" />
+    <title>Procedural Space Economy — Explorer</title>
+    <link rel="stylesheet" href="style.css" />
+    <script type="importmap">
+      { "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.166.1/build/three.module.js" } }
+    </script>
+  </head>
+  <body>
+    <main id="game">
+      <canvas id="view" aria-label="3D space exploration view"></canvas>
+      <header class="topbar">
+        <div><span class="eyebrow">PROCEDURAL SPACE ECONOMY</span><h1>Deep Space</h1></div>
+        <div class="system-readout"><span>STAR SYSTEM</span><strong id="system-name">…</strong></div>
+        <button id="warp" type="button">Jump to next system <kbd>J</kbd></button>
+      </header>
+      <section class="left-hud panel">
+        <h2>Flight telemetry</h2>
+        <div class="metric"><span>Velocity</span><strong id="velocity">0 m/s</strong></div>
+        <div class="metric"><span>Position</span><strong id="position">0, 0, 0</strong></div>
+        <div class="metric"><span>Target</span><strong id="target">Scanning…</strong></div>
+        <div class="metric"><span>Range</span><strong id="range">—</strong></div>
+        <div class="divider"></div>
+        <h2>Survey data</h2>
+        <p id="survey" class="muted">Approach a planet and press <kbd>E</kbd> to scan it.</p>
+      </section>
+      <section class="bottom-hud panel">
+        <div class="crosshair" aria-hidden="true"></div>
+        <p id="notice">Click the scene to capture the mouse and begin flying.</p>
+        <div class="controls"><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> thrust · <kbd>Space</kbd> brake · <kbd>Shift</kbd> boost · mouse look · <kbd>E</kbd> survey · <kbd>J</kbd> jump</div>
+      </section>
+      <div id="reticle" aria-hidden="true">＋</div>
+    </main>
+    <script type="module" src="client/exploration.js"></script>
+  </body>
+</html>
