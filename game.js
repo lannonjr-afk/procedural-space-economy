@@ -85,7 +85,8 @@ function clearSystem() {
   state.objects = []; state.planets = []; state.hub = null;
 }
 function makePlanetGeometry(radius, seed, amplitude) {
-  const geometry = new THREE.SphereGeometry(radius, 128, 96);
+  // Reduced resolution from (128, 96) to (48, 32) so the browser loads instantly
+  const geometry = new THREE.SphereGeometry(radius, 48, 32);
   const positions = geometry.attributes.position;
   const direction = new THREE.Vector3();
   for (let i = 0; i < positions.count; i++) {
