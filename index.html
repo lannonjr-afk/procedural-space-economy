@@ -16,14 +16,16 @@
       <header class="topbar">
         <div><span class="eyebrow">PROCEDURAL SPACE ECONOMY</span><h1>Deep Space</h1></div>
         <div class="system-readout"><span>STAR SYSTEM</span><strong id="system-name">…</strong></div>
+        <button id="guide-hub" type="button">Guide to trade hub</button>
         <button id="warp" type="button">Jump system <kbd>J</kbd></button>
       </header>
       <section class="left-hud panel">
         <h2>Flight telemetry</h2>
-        <div class="metric"><span>Velocity</span><strong id="velocity">0 m/s</strong></div>
+        <div class="metric"><span>Velocity</span><strong id="velocity">0 u/s</strong></div>
         <div class="metric"><span>Position</span><strong id="position">0, 0, 0</strong></div>
         <div class="metric"><span>Target</span><strong id="target">Scanning…</strong></div>
         <div class="metric"><span>Range</span><strong id="range">—</strong></div>
+        <div class="metric"><span>Trade hub</span><strong id="hub-range">—</strong></div>
         <div class="divider"></div>
         <h2>Survey & cargo</h2>
         <p id="survey" class="muted">Approach a planet and press E to scan it.</p>
@@ -32,11 +34,21 @@
         <p id="credits" class="credits">Credits: 0</p>
       </section>
       <section class="bottom-hud panel">
-        <div class="crosshair" aria-hidden="true"></div>
         <p id="notice">Click the scene to capture the mouse and begin flying.</p>
-        <div class="controls"><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> thrust · mouse steer · <kbd>Space</kbd> brake · <kbd>Shift</kbd> boost · <kbd>E</kbd> survey · <kbd>M</kbd> mine · <kbd>J</kbd> jump · <kbd>Ctrl</kbd> down</div>
+        <div class="controls"><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> thrust · mouse steer · <kbd>Space</kbd> brake · <kbd>Shift</kbd> boost · <kbd>E</kbd> survey · <kbd>M</kbd> mine · <kbd>T</kbd> dock · <kbd>J</kbd> jump · <kbd>Ctrl</kbd> down</div>
       </section>
       <div id="reticle" aria-hidden="true">＋</div>
+      <section id="trade-panel" class="trade-panel panel" hidden aria-live="polite">
+        <button id="close-trade" class="close-button" type="button" aria-label="Close trade hub">×</button>
+        <span class="eyebrow">REGIONAL PLAYER BAZAAR</span>
+        <h2 id="hub-title">Trade Hub</h2>
+        <p id="hub-description" class="muted"></p>
+        <div class="divider"></div>
+        <h3>Your cargo</h3>
+        <div id="hub-cargo" class="cargo-list"></div>
+        <p id="market-status" class="muted market-status"></p>
+        <p class="hub-hint">Markets start empty. Orders and stock come from players; this local prototype is not connected to the multiplayer bazaar server yet.</p>
+      </section>
     </main>
     <script type="module" src="client/exploration.js"></script>
   </body>

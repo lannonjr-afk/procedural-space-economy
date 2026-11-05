@@ -1,23 +1,17 @@
 # Procedural Space Economy
 
-An in-progress browser space-exploration game and player-driven regional bazaar backend. The current playable milestone supports local flight, surveying, finite-resource mining, and browser-local save data.
+An in-progress browser space-exploration game and player-driven regional bazaar backend. The current local gameplay milestone includes larger celestial bodies, system-specific trade hubs, flight, surveys, finite-resource mining, and browser-local save data.
 
 ## Run locally
 
-Requires a WebGL-capable browser and an internet connection for the Three.js module. From the repository root:
+Requires a WebGL-capable browser and an internet connection for the Three.js module. From the repository root, run `python3 -m http.server 8000` and open <http://localhost:8000/>. Click the scene to capture the mouse.
 
-```bash
-python3 -m http.server 8000
-```
+Controls: **WASD** thrust, **mouse** steer, **Space** brake, **Shift** boost, **R/Ctrl** up/down, **E** survey near a planet, **M** mine close to a planet, **T** dock at a hub, **J** jump systems, or click **Guide to trade hub** for local autopilot.
 
-Open <http://localhost:8000/>. Click the scene to capture the mouse. **WASD** thrust, **mouse** steer, **Space** brake, **Shift** boost, **Ctrl** descend, **E** survey, **M** mine within 18 km, and **J** jump systems.
+Planet radii and star sizes are greatly increased, with wider system spacing. Each generated system now has a distinctive procedurally assembled trade station; docking range opens a regional exchange information panel. Hub designs and names vary by system seed.
 
-Mining creates cargo only by extracting finite deposits generated with the system. Cargo, surveys, and extracted quantities save in browser local storage. There are no NPC trades or seeded credits; sale/market integration is a future milestone.
+## Important gameplay status
 
-## Backend
+The trade hub is currently a generated visual landmark and local UI. Its order book correctly has no seeded liquidity, but it does not yet submit orders to the Python bazaar or connect players. Mining and localStorage saves are client-side and are not authoritative. This is still a prototype, not a finished multiplayer game.
 
-The Python 3.11+ bazaar domain engine is in `src/spacegame/bazaar.py`; new accounts and markets start empty. Python universe and terrain reference modules are in `src/spacegame/`. Run tests with `python -m unittest discover -s tests -v`.
-
-## Current limitations
-
-This is not yet a full game or multiplayer build. The browser simulation is client-only, localStorage is not authoritative, and its seeded local system sequence is not secure or shared. There is no landing/walking, 3D terrain LOD/cave meshing, persistence server, multiplayer networking, or bazaar API integration. The current mine/survey loop is a local playable progression slice, not production persistence.
+Python bazaar and universe references are in `src/spacegame/`; run available tests with `python -m unittest discover -s tests -v`.
