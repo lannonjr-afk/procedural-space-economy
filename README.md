@@ -1,32 +1,17 @@
-# procedural-space-economy
+# Procedural Space Economy
 
-Technical blueprint and reference implementation for a procedural space exploration game with streamed planetary terrain, dynamic markets, and authoritative networking.
+An in-progress multiplayer space-game project. The first implementation milestone is a **player-funded, regional order-book bazaar**: no market stock, orders, or credits are seeded by the bazaar. Game services must explicitly register accounts and record player-earned deposits.
 
-## Play the prototype
+## Bazaar engine (Python 3.11+)
 
-This repository now includes a playable browser prototype of the game loop with:
+The standard-library implementation is in `src/spacegame/bazaar.py`. It supports regional markets, escrowed limit orders, immediate orders, FIFO price-time matching, cancellation, a JSONL command WAL with replay, and OHLCV/depth snapshots.
 
-- procedural star systems and planets
-- ship movement and resource harvesting
-- a dynamic market with buy/sell actions
-- deterministic economic and terrain simulation hooks
-
-### Run locally
-
-From the repository root:
+Run the tests from the repository root:
 
 ```bash
-python3 -m http.server 8000
+python -m unittest discover -s tests -v
 ```
 
-Then open:
+This is a backend domain engine, not yet connected to a network API or 3D client. The earlier browser-prototype claim was premature: the existing `index.html` is not present, and files had been committed under incorrect names. Those files are corrected in this commit; the browser game remains future work.
 
-- http://localhost:8000/
-
-### Files
-
-- `index.html` — browser game shell
-- `style.css` — HUD and layout styling
-- `game.js` — game loop, terrain generation, market simulation, controls
-- `docs/architecture.md` — deep design and system blueprint
-- `src/spacegame/` — Python reference models for generation, economy, and networking
+See [the bazaar design and operating assumptions](docs/bazaar.md) and [the broader game architecture](docs/architecture.md).
