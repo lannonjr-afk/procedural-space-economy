@@ -137,19 +137,22 @@ function generateSystem() {
   sunLight.position.set(0, 0, 1).multiplyScalar(starRadius * 4);
   sunLight.target.position.set(0, 0, 0);
   sunLight.castShadow = true;
-  sunLight.shadow.mapSize.set(2048, 2048);
+  sunLight.shadow.mapSize.set(4096, 4096); // Sharpens shadow lines across massive scales
   sunLight.shadow.camera.left = -5_000_000;
   sunLight.shadow.camera.right = 5_000_000;
   sunLight.shadow.camera.top = 5_000_000;
   sunLight.shadow.camera.bottom = -5_000_000;
   sunLight.shadow.camera.near = 100_000;
   sunLight.shadow.camera.far = 40_000_000;
-  sunLight.shadow.bias = -0.00015;
-  sunLight.shadow.normalBias = 0.05;
+  
+  sunLight.shadow.bias = -0.005;            
+  sunLight.shadow.normalBias = 0.8;         
   sunLight.shadow.radius = 4;
+  
   add(sunLight);
   add(sunLight.target);
   add(new THREE.AmbientLight(0x7188aa, 0.12));
+
 
   const count = 5 + Math.floor(random() * 3);
   const colors = [0x397ec1, 0xb48461, 0x82a981, 0x7d70aa, 0xb7a66f, 0x598d91, 0xa14f55];
