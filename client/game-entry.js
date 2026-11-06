@@ -31,20 +31,23 @@ replaceOnce(
   'renderer setup'
 );
 replaceOnce(
-  `  const sunLight = new THREE.DirectionalLight(starColor, 5.0);
+  `    const sunLight = new THREE.DirectionalLight(starColor, 5.0);
   sunLight.position.set(0, 0, 1).multiplyScalar(starRadius * 4);
   sunLight.target.position.set(0, 0, 0);
   sunLight.castShadow = true;
-  sunLight.shadow.mapSize.set(2048, 2048);
+  sunLight.shadow.mapSize.set(4096, 4096); // Sharpens shadow lines across massive scales
   sunLight.shadow.camera.left = -5_000_000;
   sunLight.shadow.camera.right = 5_000_000;
   sunLight.shadow.camera.top = 5_000_000;
   sunLight.shadow.camera.bottom = -5_000_000;
   sunLight.shadow.camera.near = 100_000;
   sunLight.shadow.camera.far = 40_000_000;
-  sunLight.shadow.bias = -0.00015;
-  sunLight.shadow.normalBias = 0.05;
+  
+  // Adjusted biases to eliminate self-shadowing acne artifacts
+  sunLight.shadow.bias = -0.005;            
+  sunLight.shadow.normalBias = 0.8;         
   sunLight.shadow.radius = 4;
+  
   add(sunLight);
   add(sunLight.target);
   add(new THREE.AmbientLight(0x7188aa, 0.12));`,
